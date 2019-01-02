@@ -12,7 +12,7 @@ struct StudentBasicInfo {
     std::string        name;
     unsigned int       age;
     std::map<int, int> major;
-    StudentBasicInfo() : password(""), name(""), age(0) { }
+    StudentBasicInfo() : password("1"), name(""), age(0) { }
 };
 
 class Student {
@@ -22,7 +22,7 @@ public:
 
     void setUser(const std::string& user) { user_ = user; }
 
-    void changePassword(const std::string& new_password);
+    void changePassword();
     void showCourseInfo();
     void choiceCourse();
     void queryGrade();

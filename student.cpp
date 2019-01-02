@@ -7,7 +7,7 @@ using namespace std;
 Student::Student(const std::string& user, CourseManage* cm)
     : user_(user),
       course_manage_(cm) {
-    for (int i = 100; i < 149; ++i) {
+    for (int i = 100; i < 151; ++i) {
         students_[std::to_string(i)] = new StudentBasicInfo();
     }
 }
@@ -20,8 +20,9 @@ Student::~Student() {
     students_.clear();
 }
 
-void Student::changePassword(const string& new_password) {
-    students_[user_]->password = new_password;
+void Student::changePassword() {
+    cout << "Plase input your new password:";
+    cin >> students_[user_]->password;
 }
 
 void Student::showCourseInfo() {
@@ -29,15 +30,16 @@ void Student::showCourseInfo() {
 }
 
 void Student::choiceCourse() {
+    showCourseInfo();
     cout << "Plase course num:";
     int num;
     cin >> num;
     course_manage_->AddStudent(num);
-    students_[user_]->major.insert({1, 0});
+    students_[user_]->major[num] = 0;
 }
 
 void Student::queryGrade() {
-    std::cout << user_ << " grade:" << endl;
+    cout << user_ << " grade:" << endl;
     for (const auto& subject : students_[user_]->major) {
         cout << "num: " << subject.first
              << " grade: " << subject.second << endl;

@@ -30,7 +30,7 @@ public:
     std::string classroom_;
 
 private:
-    std::map<std::string, StudentBasicInfo*> student_;
+    std::map<std::string, StudentBasicInfo*> students_;
 };
 
 
@@ -73,20 +73,27 @@ public:
 
     void ShowCourseInfo() {
         for (const auto& course: courses_) {
+            course->CourseInfo();
             std::cout << "num:" << course->num_ << std::endl
                       << "teacher:" << course->teacher_ << std::endl
                       << "hour:" << course->hour_ << std::endl
                       << "capacity:" << course->capacity_<< std::endl;
+            std::cout << std::endl;
         }
     }
 
-    void AddStudent(int num) {
+    void AddStudent(int num, const string& id, const StudentBasicInfo* sbi) {
         bool exist = false;
         for (auto& course: courses_) {
             if (course->num_ == num) {
                 exist = true;
-                if (course->capacity_ > 0) --course->capacity_;
-                else std::cout << "choice course failed!\n";
+                if (course->capacity_ > 0) {
+                    --course->capacity_;
+                    students_[id] = sbi;
+                }
+                else {
+                    std::cout << "choice course failed!\n";
+                }
                 break;
             }
         }

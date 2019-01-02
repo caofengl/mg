@@ -1,5 +1,5 @@
 a.out:
-	g++ main.cpp student.cpp -o a.out
+	g++ -o a.out -g main.cpp student.cpp
 
 .PHONY:clean
 clean:
