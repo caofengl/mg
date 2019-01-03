@@ -21,7 +21,7 @@ Student::~Student() {
 }
 
 void Student::changePassword() {
-    cout << "Plase input your new password:";
+    cout << "请输入您的新密码: ";
     cin >> students_[user_]->password;
 }
 
@@ -31,10 +31,10 @@ void Student::showCourseInfo() {
 
 void Student::choiceCourse() {
     showCourseInfo();
-    cout << "Plase course num:";
+    cout << "请输入您要选择的课程编号: ";
     int num;
     cin >> num;
-    course_manage_->AddStudent(num);
+    course_manage_->AddStudent(num, user_, students_[user_]);
     students_[user_]->major[num] = 0;
 }
 

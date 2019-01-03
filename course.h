@@ -2,6 +2,7 @@
 #define COURSE_H_
 
 #include <iostream>
+#include <string>
 #include <map>
 #include <set>
 #include "student.h"
@@ -22,6 +23,11 @@ public:
           classroom_(classroom) { }
 
     virtual void CourseInfo() = 0;
+
+    void RecordStudentInfo(const std::string& name,
+                           StudentBasicInfo* cbi) {
+        students_[name] = cbi;
+    }
 
     int         num_;
     std::string teacher_;
@@ -82,14 +88,16 @@ public:
         }
     }
 
-    void AddStudent(int num, const string& id, const StudentBasicInfo* sbi) {
+    void AddStudent(int num,
+                    const std::string& id,
+                    StudentBasicInfo* sbi) {
         bool exist = false;
         for (auto& course: courses_) {
             if (course->num_ == num) {
                 exist = true;
                 if (course->capacity_ > 0) {
                     --course->capacity_;
-                    students_[id] = sbi;
+                    course->RecordStudentInfo(id, sbi);
                 }
                 else {
                     std::cout << "choice course failed!\n";

@@ -5,20 +5,20 @@
 using namespace std;
 
 void StudentCase(Student* s) {
-    cout << "Plase input id(110-150) password(default password is empty): ";
+    cout << "请输入和账号(100到150)和密码(默认为1): ";
     string id, password;
     cin >> id >> password;
     s->setUser(id);
 
-    cout << "\t1 changePassword\n";
-    cout << "\t2 showCourseInfo\n";
-    cout << "\t3 choiceCourse\n";
-    cout << "\t4 queryGrade\n";
-    cout << "\t5 showCourseInfo\n";
+    cout << "\t1 修改密码，基本信息\n";
+    cout << "\t2 课程信息\n";
+    cout << "\t3 选课\n";
+    cout << "\t4 查询成绩\n";
+    cout << "\t5 个人信息\n";
 
     int num;
     do {
-        cout << "Plase input your choice(0 is quit): ";
+        cout << "请输入您需要的功能(0 表示退出): ";
         cin >> num;
 
         switch (num) {
@@ -55,9 +55,9 @@ int main() {
 
     int num;
     do {
-        cout << "log in(0 is quit)" << endl;
-        cout << "\t1: student" << endl;
-        cout << "\t2: admin" << endl;
+        cout << "欢迎使用(0 表示退出)" << endl;
+        cout << "\t1: 学生登录" << endl;
+        cout << "\t2: 管理员登录" << endl;
         cin >> num;
 
         switch (num) {
