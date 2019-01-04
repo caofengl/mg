@@ -1,6 +1,7 @@
 #include <iostream>
 #include "student.h"
 #include "course.h"
+#include "admin.h"
 
 using namespace std;
 
@@ -43,8 +44,40 @@ void StudentCase(Student* s) {
     } while (num != 0);
 }
 
-void AdminCase() {
+void AdminCase(CourseManage* cm) {
+    cout << "请输入和账号(100到150)和密码(默认为1): ";
+    string id, password;
+    cin >> id >> password;
 
+    Admin admin(cm);
+
+    cout << "\t1 班级管理\n";
+    cout << "\t2 课程管理\n";
+    cout << "\t3 学生选课\n";
+    cout << "\t4 成绩管理\n";
+    cout << "\t5 学生管理\n";
+
+    int num;
+    do {
+        cout << "请输入您需要的功能(0 表示退出): ";
+        cin >> num;
+
+        switch (num) {
+        case 1:
+            break;
+        case 2:
+            admin.ManageCourseInfo();
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+        case 5:
+            break;
+        default:
+            break;
+        }
+    } while (num != 0);
 }
 
 int main() {
@@ -65,7 +98,7 @@ int main() {
             StudentCase(&student);
             break;
         case 2:
-            AdminCase();
+            AdminCase(cm);
             break;
         default:
             break;

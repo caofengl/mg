@@ -11,8 +11,9 @@ struct StudentBasicInfo {
     std::string        password;
     std::string        name;
     unsigned int       age;
+    std::string        class_num;
     std::map<int, int> major;
-    StudentBasicInfo() : password("1"), name(""), age(0) { }
+    StudentBasicInfo() : password("1"), name(""), age(0), class_num("") { }
 };
 
 class Student {

@@ -29,6 +29,9 @@ public:
         students_[name] = cbi;
     }
 
+    void SetHour(int hour) { hour_ = hour; }
+    void SetCapacity(int capacity) { capacity_ = capacity; }
+
     int         num_;
     std::string teacher_;
     int         hour_;
@@ -71,19 +74,19 @@ public:
 class CourseManage {
 public:
     CourseManage() {
-        courses_.insert(new MathCourse(1, "M", 36, 30, "16-101"));
-        courses_.insert(new CppCourse(2, "M", 36, 30, "16-102"));
+        courses_.insert({1, new MathCourse(1, "M", 36, 30, "16-101")});
+        courses_.insert({2, new CppCourse(2, "M", 36, 30, "16-102")});
     }
 
-    void AddCourse(Course* course) { courses_.insert(course); }
+    void AddCourse(int num, Course* course) { courses_[num] = course; }
 
     void ShowCourseInfo() {
         for (const auto& course: courses_) {
-            course->CourseInfo();
-            std::cout << "num:" << course->num_ << std::endl
-                      << "teacher:" << course->teacher_ << std::endl
-                      << "hour:" << course->hour_ << std::endl
-                      << "capacity:" << course->capacity_<< std::endl;
+            course.second->CourseInfo();
+            std::cout << "num:" << course.second->num_ << std::endl
+                      << "teacher:" << course.second->teacher_ << std::endl
+                      << "hour:" << course.second->hour_ << std::endl
+                      << "capacity:" << course.second->capacity_<< std::endl;
             std::cout << std::endl;
         }
     }
@@ -91,25 +94,36 @@ public:
     void AddStudent(int num,
                     const std::string& id,
                     StudentBasicInfo* sbi) {
-        bool exist = false;
-        for (auto& course: courses_) {
-            if (course->num_ == num) {
-                exist = true;
-                if (course->capacity_ > 0) {
-                    --course->capacity_;
-                    course->RecordStudentInfo(id, sbi);
-                }
-                else {
-                    std::cout << "choice course failed!\n";
-                }
-                break;
-            }
+        if (courses_.find(num) == courses_.end()) {
+            std::cout << "There is no course\n";
+            return;
         }
-        if (!exist) std::cout << "There is no course!\n";
+
+        if (courses_[num]->capacity_ <= 0) {
+            std::cout << "This class if full\n";
+            return;
+        }
+
+        --courses_[num]->capacity_;
+        courses_[num]->RecordStudentInfo(id, sbi);
+    }
+
+    void SetCourseTime(int num) {
+        std::cout << "Plase class hour:";
+        int hour;
+        std::cin >> hour;
+        courses_[num]->SetHour(hour);
+    }
+
+    void SetCourseCapacity(int num) {
+        std::cout << "Plase class capacity:";
+        int capacity;
+        std::cin >> capacity;
+        courses_[num]->SetCapacity(capacity);
     }
 
 private:
-    std::set<Course*> courses_;
+    std::map<int, Course*> courses_;
 };
 
 
