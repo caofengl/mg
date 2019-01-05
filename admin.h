@@ -8,11 +8,16 @@
 
 class Admin {
 public:
-    Admin(CourseManage* cm) : cm_(cm) { }
+    Admin(StudentBasicInfo* sbi, CourseManage* cm)
+        : students_(sbi), cm_(cm) { }
+    void ManageClass();
     void ManageCourseInfo();
+    void ManageSubjectCourse();
+    void ManageScore();
+    void ManageStudent();
 
 private:
-    std::map<std::string, StudentBasicInfo*> students_;
+    StudentBasicInfo* students_;
     CourseManage* cm_;
 };
 

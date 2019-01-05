@@ -13,12 +13,13 @@ struct StudentBasicInfo {
     unsigned int       age;
     std::string        class_num;
     std::map<int, int> major;
+    std::map<std::string, StudentBasicInfo*> students;
     StudentBasicInfo() : password("1"), name(""), age(0), class_num("") { }
 };
 
 class Student {
 public:
-    Student(const std::string& user, CourseManage* cm);
+    Student(const std::string& user, StudentBasicInfo* sbi, CourseManage* cm);
     ~Student();
 
     void setUser(const std::string& user) { user_ = user; }
@@ -30,9 +31,9 @@ public:
     void showIndividualInfo();
 
 private:
-    std::string user_;
-    std::map<std::string, StudentBasicInfo*> students_;
-    CourseManage* course_manage_;
+    std::string       user_;
+    StudentBasicInfo* student_info_;
+    CourseManage*     course_manage_;
 };
 
 

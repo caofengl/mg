@@ -44,12 +44,12 @@ void StudentCase(Student* s) {
     } while (num != 0);
 }
 
-void AdminCase(CourseManage* cm) {
+void AdminCase(StudentBasicInfo* sbi, CourseManage* cm) {
     cout << "请输入和账号(100到150)和密码(默认为1): ";
     string id, password;
     cin >> id >> password;
 
-    Admin admin(cm);
+    Admin admin(sbi, cm);
 
     cout << "\t1 班级管理\n";
     cout << "\t2 课程管理\n";
@@ -64,11 +64,13 @@ void AdminCase(CourseManage* cm) {
 
         switch (num) {
         case 1:
+            admin.ManageClass();
             break;
         case 2:
             admin.ManageCourseInfo();
             break;
         case 3:
+            admin.ManageSubjectCourse();
             break;
         case 4:
             break;
@@ -82,9 +84,10 @@ void AdminCase(CourseManage* cm) {
 
 int main() {
 
-    CourseManage* cm = new CourseManage();
+    StudentBasicInfo sbi;
+    CourseManage cm;
     string stu_name = "101";
-    Student student(stu_name, cm);
+    Student student(stu_name, &sbi, &cm);
 
     int num;
     do {
@@ -98,15 +101,12 @@ int main() {
             StudentCase(&student);
             break;
         case 2:
-            AdminCase(cm);
+            AdminCase(&sbi, &cm);
             break;
         default:
             break;
         }
     } while (num != 0);
-
-    delete cm;
-    cm = NULL;
 
     return 0;
 }
