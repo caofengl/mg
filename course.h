@@ -24,12 +24,17 @@ public:
 
     virtual void CourseInfo() = 0;
 
+    void ShowStudentInfo();
+
+    void SetGrade();
+
     void RecordStudentInfo(const std::string& name,
                            StudentBasicInfo* cbi) {
         students_[name] = cbi;
     }
 
     void SetHour(int hour) { hour_ = hour; }
+
     void SetCapacity(int capacity) { capacity_ = capacity; }
 
     int         num_;
@@ -38,7 +43,7 @@ public:
     int         capacity_;
     std::string classroom_;
 
-private:
+// private:
     std::map<std::string, StudentBasicInfo*> students_;
 };
 
@@ -53,7 +58,7 @@ public:
         : Course(num, teacher, hour, capacity, classroom) { }
 
     void CourseInfo() {
-        std::cout << "Math course capacity: " << capacity_ << std::endl;
+        std::cout << "高数课，容量: " << capacity_ << std::endl;
     }
 };
 
@@ -67,7 +72,7 @@ public:
         : Course(num, teacher, hour, capacity, classroom) { }
 
     void CourseInfo() {
-        std::cout << "Cpp course capacity: " << capacity_ << std::endl;
+        std::cout << "C++ 课程，容量: " << capacity_ << std::endl;
     }
 };
 
@@ -83,10 +88,10 @@ public:
     void ShowCourseInfo() {
         for (const auto& course: courses_) {
             course.second->CourseInfo();
-            std::cout << "num:" << course.second->num_ << std::endl
-                      << "teacher:" << course.second->teacher_ << std::endl
-                      << "hour:" << course.second->hour_ << std::endl
-                      << "capacity:" << course.second->capacity_<< std::endl;
+            std::cout << "课程编号:" << course.second->num_ << std::endl
+                      << "老师:" << course.second->teacher_ << std::endl
+                      << "课时:" << course.second->hour_ << std::endl
+                      << "容量:" << course.second->capacity_<< std::endl;
             std::cout << std::endl;
         }
     }
@@ -95,12 +100,12 @@ public:
                     const std::string& id,
                     StudentBasicInfo* sbi) {
         if (courses_.find(num) == courses_.end()) {
-            std::cout << "There is no course\n";
+            std::cout << "没有这门课程\n";
             return;
         }
 
         if (courses_[num]->capacity_ <= 0) {
-            std::cout << "This class if full\n";
+            std::cout << "选择该课程的人数已达上限\n";
             return;
         }
 
@@ -109,20 +114,20 @@ public:
     }
 
     void SetCourseTime(int num) {
-        std::cout << "Plase class hour:";
+        std::cout << "请输入调整后的课程时长:";
         int hour;
         std::cin >> hour;
         courses_[num]->SetHour(hour);
     }
 
     void SetCourseCapacity(int num) {
-        std::cout << "Plase class capacity:";
+        std::cout << "请输入调整后的课程容量:";
         int capacity;
         std::cin >> capacity;
         courses_[num]->SetCapacity(capacity);
     }
 
-private:
+// private:
     std::map<int, Course*> courses_;
 };
 

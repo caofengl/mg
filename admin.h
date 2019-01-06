@@ -18,7 +18,7 @@ public:
 
 private:
     StudentBasicInfo* students_;
-    CourseManage* cm_;
+    CourseManage*     cm_;
 };
 
 

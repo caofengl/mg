@@ -73,6 +73,7 @@ void AdminCase(StudentBasicInfo* sbi, CourseManage* cm) {
             admin.ManageSubjectCourse();
             break;
         case 4:
+            admin.ManageScore();
             break;
         case 5:
             break;

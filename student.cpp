@@ -10,8 +10,9 @@ Student::Student(const std::string& user,
     : user_(user),
       student_info_(sbi),
       course_manage_(cm) {
-    for (int i = 100; i < 151; ++i) {
-        student_info_->students[std::to_string(i)] = new StudentBasicInfo();
+    for (int i = 100; i < 108; ++i) {
+        student_info_->students[to_string(i)] = new StudentBasicInfo();
+        student_info_->students[to_string(i)]->name = "stu_" + to_string(i);
     }
 }
 
@@ -42,16 +43,16 @@ void Student::choiceCourse() {
 }
 
 void Student::queryGrade() {
-    cout << user_ << " grade:" << endl;
+    cout << user_ << " 成绩:" << endl;
     for (const auto& subject : student_info_->students[user_]->major) {
-        cout << "num: " << subject.first
-             << " grade: " << subject.second << endl;
+        cout << "课程标号: " << subject.first
+             << " 成绩: " << subject.second << endl;
     }
 }
 
 void Student::showIndividualInfo() {
-    cout << "info\n";
-    cout << "\t id:  " << user_ << endl;
-    cout << "\t name:" << student_info_->students[user_]->name << endl;
-    cout << "\t age: " << student_info_->students[user_]->age<< endl;
+    cout << "学生信息\n";
+    cout << "\t 学号:  " << user_ << endl;
+    cout << "\t 姓名:" << student_info_->students[user_]->name << endl;
+    cout << "\t 年龄: " << student_info_->students[user_]->age<< endl;
 }

@@ -4,26 +4,26 @@
 using namespace std;
 
 void Admin::ManageClass() {
-    cout << "Plase input class num to show:";
+    cout << "请输入要查看的班级号";
     string num;
     cin >> num;
 
     for (auto& student : students_->students) {
         if (student.second->class_num == num) {
-            cout << "Name: " << student.second->name << endl;
+            cout << "姓名: " << student.second->name << endl;
         }
     }
 }
 
 void Admin::ManageCourseInfo() {
     cm_->ShowCourseInfo();
-    cout << "\t1: set hour\n";
-    cout << "\t2: set capacity\n";
-    cout << "choice func: ";
+    cout << "\t1: 设置课时总数\n";
+    cout << "\t2: 设置最大学生数\n";
+    cout << "请输入您的选择: ";
     int num;
     cin >> num;
 
-    cout << "Plase class num:";
+    cout << "请输入课程编号:";
     int class_num = 0;
     cin >> class_num;
     switch (num) {
@@ -39,9 +39,9 @@ void Admin::ManageCourseInfo() {
 }
 
 void Admin::ManageSubjectCourse() {
-    cout << "\t1 show subject of student\n";
-    cout << "\t2 update subject\n";
-    cout << "Plase input your choice: ";
+    cout << "\t1 查看学生选课情况\n";
+    cout << "\t2 调整课程\n";
+    cout << "请输入您的选择: ";
     int num;
     cin >> num;
 
@@ -57,6 +57,30 @@ void Admin::ManageSubjectCourse() {
         }
         break;
     case 2:
+        break;
+    default:
+        break;
+    }
+}
+
+void Admin::ManageScore() {
+    cm_->ShowCourseInfo();
+    cout << "请输入要操作的课程编号:";
+    int class_num;
+    cin >> class_num;
+
+    int num;
+    cout << "1 查看学生\n";
+    cout << "2 设置课程分数\n";
+    cout << "请输入您的选择:";
+    cin >> num;
+
+    switch (num) {
+    case 1:
+        cm_->courses_[class_num]->ShowStudentInfo();
+        break;
+    case 2:
+        cm_->courses_[class_num]->SetGrade();
         break;
     default:
         break;
