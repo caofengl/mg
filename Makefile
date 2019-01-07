@@ -8,7 +8,7 @@ obj=$(patsubst %.cpp, %.o, $(src))
 	g++ -o $@ $^
 
 $(obj):%.o:%.cpp
-	g++ -o $@ -c $< -g
+	g++ -std=c++11 -o $@ -c $< -g
 
 .PHONY:clean
 clean:
