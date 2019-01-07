@@ -86,3 +86,23 @@ void Admin::ManageScore() {
         break;
     }
 }
+
+
+void Admin::ManageStudent() {
+    cout << "1 add student info\n";
+    cout << "2 delete stduent info\n";
+    cout << "Palse input your chioce:";
+    int num;
+    cin >> num;
+
+    switch (num) {
+    case 1:
+        students_->AddStudentInfo();
+        break;
+    case 2:
+        students_->DeleteStudentInfo();
+        break;
+    default:
+        break;
+    }
+}
