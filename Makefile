@@ -5,7 +5,8 @@ src=$(wildcard *.cpp)
 obj=$(patsubst %.cpp, %.o, $(src))
 
 ./a.out:$(obj)
-	g++ -o $@ $^
+	g++ -o $@ $^ -lmysqlcppconn
+
 
 $(obj):%.o:%.cpp
 	g++ -std=c++11 -o $@ -c $< -g

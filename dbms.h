@@ -1,27 +1,31 @@
 #include <iostream>
 #include <string>
-#include <mysql/mysql.h>
+#include <mysql_connection.h>
+#include <cppconn/driver.h>
+#include <cppconn/exception.h>
+#include <cppconn/resultset.h>
+#include <cppconn/statement.h>
+#include <cppconn/prepared_statement.h>
 
-class DMBS {
+class DBMS {
 public:
-    DMBS(const std::string& host,
+    DBMS(const std::string& host,
          const std::string& user,
-         const std::string& password)
-        : host_(host), user_(user), password_(password) {
-        dp_ptr_ = mysql_init(NULL);
-        if (dp_ptr_ == NULL) {
-            std::cout << "Mysql init error\n";
-            return;
-        }
+         const std::string& password,
+         const std::string& database);
 
-        if (mysql_real_connect(dp_ptr_, host_, user_, password_, NULL, 0, NULL, 0) == NULL) {
-
-        }
-    }
+    bool CheckUserInfo(const std::string& table,
+                      const std::string& user,
+                      const std::string password);
 
 private:
     std::string host_;
     std::string user_;
     std::string password_;
-    MYSQL*      dp_ptr_;
+    std::string database_;
+
+    sql::Driver*     driver_;
+    sql::Connection* con_;
+    sql::Statement*  stmt_;
+    sql::ResultSet*  res_;
 };
