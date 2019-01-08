@@ -6,19 +6,26 @@
 using namespace std;
 
 void StudentCase(Student* s) {
-    cout << "请输入和账号(100到150)和密码(默认为1): ";
+    system("clear");
+    cout << "请输入和账号(100到107)和密码(默认为1): ";
     string id, password;
     cin >> id >> password;
     s->setUser(id);
 
-    cout << "\t1 修改密码，基本信息\n";
-    cout << "\t2 课程信息\n";
-    cout << "\t3 选课\n";
-    cout << "\t4 查询成绩\n";
-    cout << "\t5 个人信息\n";
+    auto Promote = []() {
+        system("clear");
+        cout << "****************** Student manage ************************\n";
+        cout << "\t1 修改密码，基本信息\n";
+        cout << "\t2 课程信息\n";
+        cout << "\t3 选课\n";
+        cout << "\t4 查询成绩\n";
+        cout << "\t5 个人信息\n";
+        cout << "****************** Student manage ************************\n";
+    };
 
     int num;
     do {
+        Promote();
         cout << "请输入您需要的功能(0 表示退出): ";
         cin >> num;
 
@@ -41,24 +48,36 @@ void StudentCase(Student* s) {
         default:
             break;
         }
+
+        string line;
+        getline(cin, line);
+        cout << "input Enter key to continue:";
+        getline(cin, line);
     } while (num != 0);
 }
 
 void AdminCase(StudentBasicInfo* sbi, CourseManage* cm) {
+    system("claer");
     cout << "请输入和账号(100到150)和密码(默认为1): ";
     string id, password;
     cin >> id >> password;
 
     Admin admin(sbi, cm);
 
-    cout << "\t1 班级管理\n";
-    cout << "\t2 课程管理\n";
-    cout << "\t3 学生选课\n";
-    cout << "\t4 成绩管理\n";
-    cout << "\t5 学生管理\n";
+    auto Promote = []() {
+        system("clear");
+        cout << "******************* Admin manage *************************\n";
+        cout << "\t1 班级管理\n";
+        cout << "\t2 课程管理\n";
+        cout << "\t3 学生选课\n";
+        cout << "\t4 成绩管理\n";
+        cout << "\t5 学生管理\n";
+        cout << "******************* Admin manage *************************\n";
+    };
 
     int num;
     do {
+        Promote();
         cout << "请输入您需要的功能(0 表示退出): ";
         cin >> num;
 
@@ -81,6 +100,11 @@ void AdminCase(StudentBasicInfo* sbi, CourseManage* cm) {
         default:
             break;
         }
+
+        string line;
+        getline(cin, line);
+        cout << "input Enter key to continue:";
+        getline(cin, line);
     } while (num != 0);
 }
 
@@ -93,9 +117,12 @@ int main() {
 
     int num;
     do {
+        system("clear");
+        cout << "******************* Manage System ************************\n";
         cout << "欢迎使用(0 表示退出)" << endl;
         cout << "\t1: 学生登录" << endl;
         cout << "\t2: 管理员登录" << endl;
+        cout << "******************* Manage System ************************\n";
         cin >> num;
 
         switch (num) {
