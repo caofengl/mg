@@ -19,9 +19,10 @@ void Admin::ManageCourseInfo() {
     cm_->ShowCourseInfo();
     cout << "\t1: 设置课时总数\n";
     cout << "\t2: 设置最大学生数\n";
-    cout << "请输入您的选择: ";
+    cout << "请输入您的选择: (0 表示退出)";
     int num;
     cin >> num;
+    if (num == 0) return;
 
     cout << "请输入课程编号:";
     int class_num = 0;
@@ -41,9 +42,10 @@ void Admin::ManageCourseInfo() {
 void Admin::ManageSubjectCourse() {
     cout << "\t1 查看学生选课情况\n";
     cout << "\t2 调整课程\n";
-    cout << "请输入您的选择: ";
+    cout << "请输入您的选择: (0 表示退出)";
     int num;
     cin >> num;
+    if (num == 0) return;
 
     switch (num) {
     case 1:
@@ -72,15 +74,22 @@ void Admin::ManageScore() {
     int num;
     cout << "1 查看学生\n";
     cout << "2 设置课程分数\n";
-    cout << "请输入您的选择:";
+    cout << "请输入您的选择(0 表示退出):";
     cin >> num;
+    if (num == 0) return;
 
+    string id, grade, query;
     switch (num) {
     case 1:
-        cm_->courses_[class_num]->ShowStudentInfo();
+        cm_->ShowStudentInfo(class_num);
         break;
     case 2:
-        cm_->courses_[class_num]->SetGrade();
+        cout << "请输学生id和该课程的成绩: ";
+        cin >> id >> grade;
+        // cm_->courses_[class_num]->SetGrade(id, grade);
+        cm_->SetGrade(class_num, id, grade);
+        query = "UPDATE subject SET course_grade=" + grade + " WHERE student_id=" + id + " and course_num=" + to_string(class_num);
+        dbms_->Execute(query);
         break;
     default:
         break;
@@ -89,18 +98,19 @@ void Admin::ManageScore() {
 
 
 void Admin::ManageStudent() {
-    cout << "1 add student info\n";
-    cout << "2 delete stduent info\n";
-    cout << "Palse input your chioce:";
+    cout << "1 添加学生信息\n";
+    cout << "2 删除学生信息\n";
+    cout << "请输入您的选择:(0 表示退出)";
     int num;
     cin >> num;
+    if (num == 0) return;
 
     switch (num) {
     case 1:
-        students_->AddStudentInfo();
+        students_info_->AddStudentInfo();
         break;
     case 2:
-        students_->DeleteStudentInfo();
+        students_info_->DeleteStudentInfo();
         break;
     default:
         break;

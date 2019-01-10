@@ -5,11 +5,12 @@
 #include <map>
 #include "student.h"
 #include "course.h"
+#include "dbms.h"
 
 class Admin {
 public:
-    Admin(StudentBasicInfo* sbi, CourseManage* cm)
-        : students_(sbi), cm_(cm) { }
+    Admin(StudentBasicInfo* sbi, Student* s, CourseManage* cm, DBMS* dbms)
+        : students_(sbi), students_info_(s), cm_(cm), dbms_(dbms) { }
     void ManageClass();
     void ManageCourseInfo();
     void ManageSubjectCourse();
@@ -18,7 +19,9 @@ public:
 
 private:
     StudentBasicInfo* students_;
+    Student*          students_info_;
     CourseManage*     cm_;
+    DBMS*             dbms_;
 };
 
 

@@ -4,49 +4,35 @@
 #include <map>
 #include <string>
 #include "course.h"
+#include "dbms.h"
 
 class CourseManage;
 
 struct StudentBasicInfo {
+    std::string        id;
     std::string        password;
     std::string        name;
-    unsigned int       age;
+    std::string        age;
     std::string        class_num;
     std::map<int, int> major;
     std::map<std::string, StudentBasicInfo*> students;
 
-    StudentBasicInfo() : password("1"), name(""), age(0), class_num("1") { }
-
-    void AddStudentInfo() {
-        std::string num, password;
-        std::cout << "Plase input student id pawwsord:";
-        std::cin >> num >> password;
-
-        if (students.find(num) != students.end()) {
-            std::cout << "This id exist\n";
-            return;
-        }
-        students[num] = new StudentBasicInfo();
-        students[num]->password = password;
-    }
-
-    void DeleteStudentInfo() {
-        std::string num;
-        std::cout << "Plase input student id pawwsord:";
-        std::cin >> num;
-
-        if (students.find(num) == students.end()) {
-            std::cout << "This id not exist\n";
-            return;
-        }
-        delete students[num];
-        students.erase(num);
-    }
+    StudentBasicInfo() : password("1"), name(""), age("20"), class_num("1") { }
+    StudentBasicInfo(std::string id,
+                     std::string password,
+                     std::string name,
+                     std::string age,
+                     std::string class_num)
+        : id(id), password(password),
+          name(name), age(age), class_num(class_num) { }
 };
 
 class Student {
 public:
-    Student(const std::string& user, StudentBasicInfo* sbi, CourseManage* cm);
+    Student(const std::string& user,
+            StudentBasicInfo* sbi,
+            CourseManage* cm,
+            DBMS* dbms);
     ~Student();
 
     void setUser(const std::string& user) { user_ = user; }
@@ -57,10 +43,14 @@ public:
     void queryGrade();
     void showIndividualInfo();
 
+    void AddStudentInfo();
+    void DeleteStudentInfo();
+
 private:
     std::string       user_;
     StudentBasicInfo* student_info_;
     CourseManage*     course_manage_;
+    DBMS*             dbms_;
 };
 
 

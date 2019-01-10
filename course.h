@@ -3,9 +3,11 @@
 
 #include <iostream>
 #include <string>
+#include <memory>
 #include <map>
 #include <set>
 #include "student.h"
+#include "dbms.h"
 
 struct StudentBasicInfo;
 
@@ -22,16 +24,14 @@ public:
           capacity_(capacity),
           classroom_(classroom) { }
 
-    virtual void CourseInfo() = 0;
+    void CourseInfo();
 
-    void ShowStudentInfo();
+    void SetGrade(const std::string& id, const std::string& grade);
 
-    void SetGrade();
-
-    void RecordStudentInfo(const std::string& name,
-                           StudentBasicInfo* cbi) {
-        students_[name] = cbi;
-    }
+    // void RecordStudentInfo(const std::string& name,
+    //                        StudentBasicInfo* cbi) {
+    //     students_[name] = cbi;
+    // }
 
     void SetHour(int hour) { hour_ = hour; }
 
@@ -78,9 +78,21 @@ public:
 
 class CourseManage {
 public:
-    CourseManage() {
-        courses_.insert({1, new MathCourse(1, "M", 36, 30, "16-101")});
-        courses_.insert({2, new CppCourse(2, "M", 36, 30, "16-102")});
+    CourseManage(DBMS* dbms, StudentBasicInfo* sbi) : dbms_(dbms), sbi_(sbi) {
+        std::string query = "SELECT * FROM course";
+        std::unique_ptr<sql::ResultSet> res(dbms_->ExecuteQuery(query));
+        std::string num, teacher, hour, capacity, classroom;
+        while (res->next()) {
+            num       = res->getString("course_num");
+            teacher   = res->getString("course_teacher");
+            hour      = res->getString("course_hour");
+            capacity  = res->getString("course_capacity");
+            classroom = res->getString("course_classroom");
+
+            Course* course = new Course(stoi(num), teacher, stoi(hour),
+                                        stoi(capacity), classroom);
+            courses_[stoi(num)] = course;
+        }
     }
 
     void AddCourse(int num, Course* course) { courses_[num] = course; }
@@ -98,26 +110,16 @@ public:
 
     void AddStudent(int num,
                     const std::string& id,
-                    StudentBasicInfo* sbi) {
-        if (courses_.find(num) == courses_.end()) {
-            std::cout << "没有这门课程\n";
-            return;
-        }
-
-        if (courses_[num]->capacity_ <= 0) {
-            std::cout << "选择该课程的人数已达上限\n";
-            return;
-        }
-
-        --courses_[num]->capacity_;
-        courses_[num]->RecordStudentInfo(id, sbi);
-    }
+                    StudentBasicInfo* sbi);
 
     void SetCourseTime(int num) {
         std::cout << "请输入调整后的课程时长:";
         int hour;
         std::cin >> hour;
         courses_[num]->SetHour(hour);
+
+        std::string query = "UPDATE course SET course_hour=" + std::to_string(hour) + " WHERE course_num=" + std::to_string(num);
+        dbms_->Execute(query);
     }
 
     void SetCourseCapacity(int num) {
@@ -125,10 +127,18 @@ public:
         int capacity;
         std::cin >> capacity;
         courses_[num]->SetCapacity(capacity);
+
+        std::string query = "UPDATE course SET course_capacity=" + std::to_string(capacity) + " WHERE course_num=" + std::to_string(num);
+        dbms_->Execute(query);
     }
 
+    void SetGrade(int num, const std::string& id, const std::string& grade);
+    void ShowStudentInfo(int num);
+
 // private:
+    DBMS*                  dbms_;
     std::map<int, Course*> courses_;
+    StudentBasicInfo*      sbi_;
 };
 
 
